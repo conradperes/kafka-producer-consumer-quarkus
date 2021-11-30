@@ -8,13 +8,18 @@ public class Transaction {
 
     public String id;//uui
     public String currentstep;
-    public String payload;
+    public Card payload;
     public String sagastatus;
     public String stepstatus;
     public String type;
     public String version;
 
-    public Transaction(String id, String currentstep, String payload, String sagastatus, String stepstatus, String type, String version) {
+
+
+    public Transaction() {
+    }
+
+    public Transaction(String id, String currentstep, Card payload, String sagastatus, String stepstatus, String type, String version) {
         this.id = id;
         this.currentstep = currentstep;
         this.payload = payload;
@@ -24,17 +29,12 @@ public class Transaction {
         this.version = version;
     }
 
-    public Transaction() {
-    }
-
-
-
     @Override
     public String toString() {
         return "Transaction{" +
                 "id='" + id + '\'' +
                 ", currentstep='" + currentstep + '\'' +
-                ", oayload='" + payload + '\'' +
+                ", payload='" + payload + '\'' +
                 ", sagastatus='" + sagastatus + '\'' +
                 ", stepstatus='" + stepstatus + '\'' +
                 ", type='" + type + '\'' +
