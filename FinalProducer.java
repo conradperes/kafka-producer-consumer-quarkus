@@ -51,11 +51,11 @@ public class FinalProducer {
                         jsonNode.get("sagastatus").equals(SUCCEEDED)) {
                     emitter.send(jsonNode);
                     logger.info("Transaction Succeeded=" + jsonNode.get("id"));
-                    createStreams(null);
+                    SumLambdaExample.getTopology2();
                 } else {
                     emitter.send(jsonNode);
                     logger.info("Transaction Rejected=" + jsonNode.get("id"));
-                    createStreams(null);
+                    SumLambdaExample.getTopology2();
                 }
             }else{
                 logger.info("Empty Record!");
@@ -76,20 +76,20 @@ public class FinalProducer {
         StreamsBuilder builder = new StreamsBuilder();
         KStream<String,  Transaction>
                 streamTransaction = builder.stream(TRANSACTION_FINISHED_TOPIC, Consumed.with(stringSerde, transactionSerde));
-        final KGroupedStream<Transaction, String> groupedByTransaction = streamTransaction
-                .<Transaction>flatMapValues(value -> () -> (Iterator<Transaction>) value)
-                .groupBy((key, word) -> word, Serialized.with(stringSerde, stringSerde));
+//        final KGroupedStream<Transaction, String> groupedByTransaction = streamTransaction
+//                .<Transaction>flatMapValues(value -> () -> (Iterator<Transaction>) value)
+//                .groupBy((key, word) -> word, Serialized.with(stringSerde, stringSerde));
         // Create a State Store for with the all time word count
-        groupedByTransaction.aggregate(() -> "",
-                (id, stepstatus, sagastatus) -> sagastatus + stepstatus,
-                Materialized.with(Serdes.String(), Serdes.String()));
-        //groupedByTransaction.count(Materialized.<String, Long, KeyValueStore<Bytes, byte[]>>as("word-count")
-        //        .withValueSerde(Serdes.Long()));
-        // Create a Windowed State Store that contains the word count for every
-        // 1 minute
-        groupedByTransaction.windowedBy(TimeWindows.of(60000))
-                .count(Materialized.<String, Long, WindowStore<Bytes, byte[]>>as("windowed-word-count")
-                        .withValueSerde(Serdes.Long()));
+//        groupedByTransaction.aggregate(() -> "",
+//                (id, stepstatus, sagastatus) -> sagastatus + stepstatus,
+//                Materialized.with(Serdes.String(), Serdes.String()));
+//        //groupedByTransaction.count(Materialized.<String, Long, KeyValueStore<Bytes, byte[]>>as("word-count")
+//        //        .withValueSerde(Serdes.Long()));
+//        // Create a Windowed State Store that contains the word count for every
+//        // 1 minute
+//        groupedByTransaction.windowedBy(TimeWindows.of(60000))
+//                .count(Materialized.<String, Long, WindowStore<Bytes, byte[]>>as("windowed-word-count")
+//                        .withValueSerde(Serdes.Long()));
         return new KafkaStreams(builder.build(), streamsConfiguration);
     }
 }

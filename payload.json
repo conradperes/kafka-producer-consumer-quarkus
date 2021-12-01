@@ -1,0 +1,9 @@
+{
+  "id": "73707ad2-0732-4592-b7e2-79b07c745e45",
+  "currentstep": "initial",
+  "payload": {"idCard":"1","balance":"456","pin":"1234"},
+  "sagastatus": "SUCEEDEED",
+  "stepstatus": "SUCEEDEED",
+  "type": "order-placement",
+  "version": "0"
+}

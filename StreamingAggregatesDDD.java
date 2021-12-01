@@ -74,19 +74,19 @@ public class StreamingAggregatesDDD {
 //                Consumed.with(defaultIdSerde, addressSerde));
 
         //2a) pseudo-aggreate addresses to keep latest relationship info
-        KTable<Integer,Transaction> tempTransactionTable = transactionStream
-                .groupByKey(Serialized.with(integerSerde, transactionSerde))
-                .aggregate(
-                        () -> new Transaction(),
-                        (Transaction before, Transaction latest) -> {
-                            latest.update(before);
-                            return latest;
-                        },
-                        Materialized.<Integer,Transaction,KeyValueStore<Bytes, byte[]>>
-                                as(childrenTopic+"_table_temp")
-                                .withKeySerde(integerSerde)
-                                .withValueSerde(transactionSerde)
-                );
+//        KTable<Integer,Transaction> tempTransactionTable = (KTable<Integer, Transaction>) transactionStream
+//                .groupByKey(Serialized.with(integerSerde, transactionSerde))
+//                .aggregate(
+//                        () -> new Transaction(),
+//                        (Transaction before, Transaction latest) -> {
+//                            latest.update(before);
+//                            return latest;
+//                        },
+//                        Materialized.<Integer,Transaction,KeyValueStore<Bytes, byte[]>>
+//                                as(childrenTopic+"_table_temp")
+//                                .withKeySerde(integerSerde)
+//                                .withValueSerde(transactionSerde)
+//                );
 
 
 
@@ -132,7 +132,7 @@ public class StreamingAggregatesDDD {
 //        dddAggregate.toStream().to("final_ddd_aggregates",
 //                Produced.with(defaultIdSerde,(Serde)aggregateSerde));
 
-        tempTransactionTable.toStream().print(Printed.toSysOut());
+//        tempTransactionTable.toStream().print(Printed.toSysOut());
 
         final KafkaStreams streams = new KafkaStreams(builder.build(), props);
         streams.start();
