@@ -1,5 +1,7 @@
 package org.acme;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.kafka.common.serialization.Deserializer;
 
 import java.io.Serializable;
@@ -18,8 +20,15 @@ public class Transaction {
 
     public Transaction() {
     }
-
-    public Transaction(String id, String currentstep, Card payload, String sagastatus, String stepstatus, String type, String version) {
+    @JsonCreator
+    public Transaction(
+            @JsonProperty("id")String id,
+            @JsonProperty("currentStep")String currentstep,
+            @JsonProperty("payload")Card payload,
+            @JsonProperty("sagaStatus")String sagastatus,
+            @JsonProperty("stepStatus")String stepstatus,
+            @JsonProperty("type")String type,
+            @JsonProperty("version")String version) {
         this.id = id;
         this.currentstep = currentstep;
         this.payload = payload;
@@ -27,6 +36,18 @@ public class Transaction {
         this.stepstatus = stepstatus;
         this.type = type;
         this.version = version;
+    }
+
+
+    public void update(Transaction transaction){
+        if(transaction.id.equals(this.id) && transaction.stepstatus.equals(this.stepstatus) && transaction.sagastatus.equals(this.sagastatus)){
+            return;
+        }else{
+            this.id = transaction.id;
+            this.stepstatus = transaction.stepstatus;
+            this.sagastatus = transaction.sagastatus;
+        }
+
     }
 
     @Override

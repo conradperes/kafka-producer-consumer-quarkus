@@ -1,3 +1,4 @@
+
 package org.acme;
 
 import io.smallrye.reactive.messaging.kafka.Record;

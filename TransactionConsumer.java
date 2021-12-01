@@ -31,10 +31,10 @@ public class TransactionConsumer {
     public void process(Record<Integer, Transaction> record) {
         if(record!=null) {
             //logger.info("ToString" + record.toString());
-            //logger.info("Got an Authorizations for record: " + record.key());
-            logger.info("Got an Authorizations for record:" + record.value());
-            producer.sendTransactionToKafka(record.value());
-
+            logger.info("Got an Authorizations for record: " + record.key());
+            //logger.info("Got an Authorizations for record:" + record.value());
+            //producer.sendTransactionToKafka(record.value());
+            producer.sendTransactionToKafka(record);
             //logger.info("Record" + record);
             //logger.info("Record" + record.withKey("52384590238450982349508203580345"));
             //logger.infof("Got an Authorizations for record: %d - %s", record.key(), record.value());

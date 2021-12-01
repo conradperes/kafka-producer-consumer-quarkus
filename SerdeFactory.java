@@ -1,4 +1,4 @@
-package io.debezium.examples.aggregation.serdes;
+package org.acme;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,3 +24,4 @@ public class SerdeFactory {
     }
 
 }
+

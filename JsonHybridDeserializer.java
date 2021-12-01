@@ -1,7 +1,7 @@
-package io.debezium.examples.aggregation.serdes;
+package org.acme;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.debezium.examples.aggregation.model.EventType;
+import org.acme.EventType;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
 
